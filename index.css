@@ -105,11 +105,6 @@ button:hover {
   letter-spacing: 0.1em;
 }
 
-/* HELLO SCREEN */
-#hello-screen h1 {
-  font-size: 1.6rem;
-  letter-spacing: 0.2em;
-}
 
 /* SUBTLE BREATHING EFFECT */
 .screen {
@@ -129,10 +124,21 @@ button:hover {
   }
 }
 
+
+#hello-screen {
+  position: fixed;
+  inset: 0;
+  padding: 0;
+  margin: 0;
+  background: #0f0d0b;
+  border: none;
+  box-shadow: none;
+  animation: none;
+}
+
 #cube-container {
-  width: 100%;
-  height: 300px;
-  margin-top: 1.5rem;
-  border: 1px solid #3a342c;
+  width: 100vw;
+  height: 100vh;
+  border: none;
 }
 
