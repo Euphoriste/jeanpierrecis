@@ -128,3 +128,11 @@ button:hover {
       inset 0 0 80px rgba(0,0,0,0.8);
   }
 }
+
+#cube-container {
+  width: 100%;
+  height: 300px;
+  margin-top: 1.5rem;
+  border: 1px solid #3a342c;
+}
+
