@@ -34,7 +34,7 @@ $(document).ready(function () {
     const container = document.getElementById("cube-container");
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(#ff0000);
+    scene.background = new THREE.Color(0x0f0d0b);
 
     const camera = new THREE.PerspectiveCamera(
       45,
@@ -91,5 +91,6 @@ $(document).ready(function () {
     animate();
   }
 });
+
 
 
