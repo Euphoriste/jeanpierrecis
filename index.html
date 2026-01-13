@@ -1,29 +1,42 @@
-<html>
-  <head>
-    <!--
-      Get jQuery via CDN (https://jquery.com/)
-      jQuery is a js framework that gives us some easy to use
-      functions for interacting with webpages and APIs
-    -->
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Load our files -->
-    <script type="text/javascript" src="index.js"></script>
-    <link rel="stylesheet" type="text/css" href="index.css">
-  </head>
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-  <body>
-    <!-- TODO: Say something interesting in the heading tag... -->
-    <h1>...</h1>
+  <!-- Files -->
+  <script src="index.js"></script>
+  <link rel="stylesheet" href="index.css">
 
-    <div class="purple">
-      <span>This text should be purple</span>
-    </div>
+  <!-- Retro font -->
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
 
-    <button>Show me some animal trivia!</button>
+<body>
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen" class="screen">
+    <h1>UNKNOWN TERMINAL</h1>
 
-    <div id="results-area"></div>
-    <div id="question-display"></div>
-    <div id="answer-display"></div>
-  </body>
+    <p class="subtitle">ENTER THE SECRET</p>
+
+    <input 
+      type="password" 
+      id="password-input" 
+      placeholder="••••••••••••••"
+      autocomplete="off"
+    >
+
+    <button id="submit-btn">ACCESS</button>
+
+    <p id="error-message"></p>
+  </div>
+
+  <!-- HELLO WORLD SCREEN -->
+  <div id="hello-screen" class="screen hidden">
+    <h1>Hello World</h1>
+  </div>
+</body>
 </html>
