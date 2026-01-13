@@ -67,7 +67,7 @@ $(document).ready(function () {
     scene.add(pointLight);
 
     // Controls
-    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    const controls = new OrbitControls(camera, renderer.domElement);
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.enableZoom = false;
@@ -91,4 +91,5 @@ $(document).ready(function () {
     animate();
   }
 });
+
 
