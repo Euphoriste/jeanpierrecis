@@ -2,6 +2,7 @@ $(document).ready(function () {
   const correctPassword = "RonaldinhoBruxo";
 
   $("#submit-btn").on("click", checkPassword);
+  
 
   $("#password-input").on("keypress", function (e) {
     if (e.which === 13) {
@@ -27,3 +28,4 @@ $(document).ready(function () {
     }
   }
 });
+
