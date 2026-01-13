@@ -1,5 +1,5 @@
 $(document).ready(function () {
-  const correctPassword = "RonaldinhoBruxo";
+  const correctPassword = "ttt";
   let cubeInitialized = false;
 
   $("#submit-btn").on("click", checkPassword);
@@ -34,7 +34,7 @@ $(document).ready(function () {
     const container = document.getElementById("cube-container");
 
     const scene = new THREE.Scene();
-    scene.background = new THREE.Color(0x0f0d0b);
+    scene.background = new THREE.Color(#ff0000);
 
     const camera = new THREE.PerspectiveCamera(
       45,
@@ -91,3 +91,4 @@ $(document).ready(function () {
     animate();
   }
 });
+
