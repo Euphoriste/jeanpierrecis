@@ -213,16 +213,23 @@ Object.values(storyImages).forEach(src => {
      APPLY LANGUAGE
   ========================== */
   function startBackgroundMusic() {
-    if (backgroundAudio) return; // déjà lancée
-  
-    backgroundAudio = new Audio("background.mp3");
-    backgroundAudio.volume = 0.09; // ajuste si besoin
-    backgroundAudio.loop = true;
-  
-    backgroundAudio.play().catch(() => {
-      // autoplay bloqué tant qu'il n'y a pas eu d'interaction
-    });
-  }
+  if (backgroundAudio) return;
+
+  backgroundAudio = new Audio("background.mp3");
+  backgroundAudio.volume = 0.09;
+  backgroundAudio.loop = false; // IMPORTANT: disable native loop
+
+  // 🔁 Manual loop (works everywhere)
+  backgroundAudio.addEventListener("ended", () => {
+    backgroundAudio.currentTime = 0;
+    backgroundAudio.play().catch(() => {});
+  });
+
+  backgroundAudio.play().catch(() => {
+    // autoplay blocked until user interaction
+  });
+}
+
   
 
   function applyLanguage() {
@@ -699,6 +706,7 @@ function showCubePhrase(lang) {
     container.append(span);
   });
 }
+
 
 
 
