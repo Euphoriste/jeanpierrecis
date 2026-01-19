@@ -4,10 +4,12 @@ $(document).ready(function () {
      CONFIG
   ========================== */
 
-  const correctPassword = "ttt";
+  const correctPassword = "LUZ";
   let cubeInitialized = false;
 
   let currentLang = "pt";
+  let narrationAudio = null;
+  let backgroundAudio = null;
 
   let typingTimeout = null;
   let cursorInterval = null;
@@ -17,26 +19,57 @@ $(document).ready(function () {
     fr: {
       subtitle: "ENTREZ LE SECRET",
       button: "ACCÈS",
-      error: "CE MOT N’EXISTE PAS",
-      cube: "ACCÉDER AU CUBE"
+      error: "INCORRECT",
+      cube: "ACCÉDER AU CUBE",
+      title: "LE CUBE DES SILENCES",
+      warning: "Activez l’audio avant de poursuivre l’expérience.",
+      continue: "ENTRER DANS LE RÉCIT"
     },
     pt: {
       subtitle: "INSIRA O SEGREDO",
       button: "ACESSAR",
-      error: "ESSA PALAVRA NÃO EXISTE",
-      cube: "ACESSAR O CUBO"
+      error: "INCORRETO",
+      cube: "ACESSAR O CUBO",
+      title: "O CUBO DOS SILÊNCIOS",
+      warning: "Ative o áudio antes de continuar a experiência.",
+      continue: "ENTRAR NO RELATO"
     }
   };
   
+  const storyImages = {
+    STORY1: "story1.png",
+    STORY2: "story2.png",
+    STORY3: "story3.png",
+    STORY4: "story4.png",
+    STORY5: "story5.png",
+    STORY6: "story6.png",
+    STORY7: "story7.png",
+    STORY8: "story8.png",
+  };
+
+  const storySVGs = {
+    SVG1: "rato-cis.svg"
+  };
+  
+
+  // ✅ PRELOAD STORY IMAGES
+const preloadedImages = {};
+
+Object.values(storyImages).forEach(src => {
+  const img = new Image();
+  img.src = src;
+  preloadedImages[src] = img;
+});
+
 
   const texts = {
     fr: `
   On raconte qu’il fut un temps ancien où la France n’avait pas encore appris à sourire à ce qui venait de loin.
   
   Les routes étaient étroites et boueuses, les villes closes sur elles-mêmes, et la vie suivait un ordre immuable fait de travail, de silence et de saisons répétées. En ces jours-là, nul n’imaginait qu’un simple jeu pût bouleverser l’équilibre du royaume.
-  
+  STORY1
   C’est alors qu’apparut un étranger venu d’au-delà des mers, d’une terre que les cartes ne savaient encore nommer. Il venait d’un pays chaud et verdoyant, où l’océan rencontrait la forêt sans fin : le Brésil.
-  
+  STORY2
   Son nom, transmis par les murmures et les récits déformés, était Ronaldinho Bruxoh.
   
   Il n’arriva ni en conquérant ni en marchand. Il ne portait ni or ni arme. Dans sa besace, il n’y avait qu’une sphère de cuir cousu. Mais sous ses pieds, cette sphère prenait vie.
@@ -46,7 +79,7 @@ $(document).ready(function () {
   Une joie nouvelle se répandit dans le royaume, simple et partagée, sans distinction de rang ni de fortune.
   
   Ainsi entra en France le jeu du football, et avec lui une légèreté que le pays ne connaissait plus.
-  
+  STORY3
   Mais cette joie eut un prix.
   
   Car les hommes, désormais, passaient plus de temps à jouer qu’à travailler. Les fromagers, surtout, furent les premiers à céder à cette passion nouvelle. Ils quittèrent leurs caves trop tôt, laissèrent les meules sans surveillance, oublièrent les gestes précis et patients que demande le fromage.
@@ -56,7 +89,7 @@ $(document).ready(function () {
   
   Dans les murs, sous les planchers, dans les caves humides, vivaient les souris.
   Parmi elles se trouvait une créature singulière, ancienne et orgueilleuse, dotée d’un esprit plus aiguisé que celui de bien des hommes. Son nom était Jean-Pierre Cis.
-  
+  STORY4
   Jean-Pierre Cis détestait le bruit, la nouveauté, et plus encore la joie venue d’ailleurs. Il observait les hommes rire, courir, oublier leurs devoirs, et voyait les fromages se détériorer, les réserves diminuer, l’ordre ancien se dissoudre.
   Pour lui, ce n’était pas un jeu : c’était une profanation.
   
@@ -67,15 +100,16 @@ $(document).ready(function () {
   
   Il maudit toutes les souris de France, et toutes celles qui naîtraient après elles, afin qu’elles portent en elles une aversion instinctive pour chaque Brésilien posant le pied sur cette terre.
   Il ordonna qu’elles troublent leurs pas, dérèglent leur chance, multiplient contretemps et malheurs légers mais incessants. Non pour tuer, non pour détruire, mais pour fatiguer, user, décourager.
-  
+  STORY5
   De cette malédiction naquit un mot, forgé dans l’ombre même de son esprit, mêlant langues et rancunes anciennes :
-  Rato – Ra Cis To.
-  
+  SVG1
   Le sort s’enracina profondément. Il entra dans les pierres des villes, dans les caves, dans les murs, dans les ombres. Et lorsque Ronaldinho Bruxoh quitta la France, la magie resta.
   
   Les siècles passèrent. Les royaumes changèrent. Les guerres vinrent et s’en allèrent. Les hommes oublièrent l’origine du jeu, mais le football demeura, tout comme la malédiction.
   Et chaque fois qu’un Brésilien arrivait en France, quelque chose semblait se dérégler. Rien de grand, rien de tragique, mais toujours ces incidents absurdes, ces résistances invisibles, comme si le monde lui-même hésitait à l’accueillir.
-  
+  STORY6
+  STORY7
+  STORY8
   Jean-Pierre Cis vécut longtemps, nourri par la persistance de son sort. Puis un jour, même sa magie céda au poids du temps.
   On retrouva son corps dans des circonstances trop étranges pour être comprises. On l’enterra finalement dans un lieu réservé aux existences singulières : le cimetière du Père-Lachaise.
   
@@ -105,9 +139,9 @@ $(document).ready(function () {
   Conta-se que houve um tempo antigo em que a França ainda não havia aprendido a sorrir para aquilo que vinha de longe.
   
   As estradas eram estreitas e lamacentas, as cidades fechadas sobre si mesmas, e a vida seguia uma ordem imutável feita de trabalho, silêncio e estações que se repetiam. Naqueles dias, ninguém imaginava que um simples jogo pudesse abalar o equilíbrio do reino.
-  
+  STORY1
   Foi então que surgiu um estrangeiro vindo de além-mar, de uma terra que os mapas ainda não sabiam nomear. Ele vinha de um país quente e verdejante, onde o oceano encontra a floresta sem fim: o Brasil.
-  
+  STORY2
   Seu nome, transmitido por murmúrios e relatos distorcidos, era Ronaldinho Bruxoh.
   
   Ele não chegou como conquistador nem como mercador. Não trazia ouro nem armas. Em sua sacola, havia apenas uma esfera de couro costurado. Mas sob seus pés, essa esfera ganhava vida.
@@ -117,7 +151,7 @@ $(document).ready(function () {
   Uma alegria nova espalhou-se pelo reino, simples e compartilhada, sem distinção de posição ou fortuna.
   
   Assim entrou na França o jogo do futebol, e com ele uma leveza que o país já não conhecia.
-  
+  STORY3
   Mas essa alegria teve um preço.
   
   Pois os homens, a partir de então, passaram mais tempo jogando do que trabalhando. Os queijeiros, sobretudo, foram os primeiros a ceder a essa nova paixão. Abandonaram suas caves cedo demais, deixaram as rodas de queijo sem vigilância, esqueceram os gestos precisos e pacientes que o queijo exige.
@@ -127,7 +161,7 @@ $(document).ready(function () {
   
   Nos muros, sob os assoalhos, nas caves úmidas, viviam os ratos.
   Entre eles havia uma criatura singular, antiga e orgulhosa, dotada de um espírito mais afiado do que o de muitos homens. Seu nome era Jean-Pierre Cis.
-  
+  STORY4
   Jean-Pierre Cis detestava o barulho, a novidade e, mais ainda, a alegria vinda de fora. Observava os homens rirem, correrem, esquecerem seus deveres, e via os queijos se deteriorarem, as reservas diminuírem, a antiga ordem se dissolver.
   Para ele, não era um jogo: era uma profanação.
   
@@ -138,15 +172,16 @@ $(document).ready(function () {
   
   Ele amaldiçoou todos os ratos da França, e todos aqueles que nasceriam depois deles, para que carregassem em si uma aversão instintiva a cada brasileiro que pisasse nessa terra.
   Ordenou que perturbassem seus passos, desregulassem sua sorte, multiplicassem contratempos e pequenos infortúnios constantes. Não para matar, não para destruir, mas para cansar, desgastar, desencorajar.
-  
+  STORY5
   Dessa maldição nasceu uma palavra, forjada na própria sombra de seu espírito, misturando línguas e rancores antigos:
-  Rato – Ra Cis To.
-  
+  SVG1
   O feitiço criou raízes profundas. Entrou nas pedras das cidades, nas caves, nos muros, nas sombras. E quando Ronaldinho Bruxoh deixou a França, a magia permaneceu.
   
   Os séculos passaram. Os reinos mudaram. As guerras vieram e se foram. Os homens esqueceram a origem do jogo, mas o futebol permaneceu, assim como a maldição.
   E cada vez que um brasileiro chegava à França, algo parecia se desregular. Nada grandioso, nada trágico, mas sempre esses incidentes absurdos, essas resistências invisíveis, como se o próprio mundo hesitasse em acolhê-lo.
-  
+  STORY6
+  STORY7
+  STORY8
   Jean-Pierre Cis viveu muito tempo, alimentado pela persistência de seu feitiço. Depois, um dia, até mesmo sua magia cedeu ao peso do tempo.
   Seu corpo foi encontrado em circunstâncias estranhas demais para serem compreendidas. Acabaram por enterrá-lo num lugar reservado às existências singulares: o cemitério do Père-Lachaise.
   
@@ -177,11 +212,32 @@ $(document).ready(function () {
   /* =========================
      APPLY LANGUAGE
   ========================== */
+  function startBackgroundMusic() {
+    if (backgroundAudio) return; // déjà lancée
+  
+    backgroundAudio = new Audio("background.mp3");
+    backgroundAudio.volume = 0.09; // ajuste si besoin
+    backgroundAudio.loop = true;
+  
+    backgroundAudio.play().catch(() => {
+      // autoplay bloqué tant qu'il n'y a pas eu d'interaction
+    });
+  }
+  
 
   function applyLanguage() {
     $(".subtitle").text(ui[currentLang].subtitle);
     $("#submit-btn").text(ui[currentLang].button);
     $("#cube-btn").text(ui[currentLang].cube);
+    $("#story-title-img").fadeOut(150, function () {
+  $(this)
+    .attr("src", currentLang === "fr" ? "titreFR.png" : "titreBR.png")
+    .fadeIn(300);
+});
+
+$(".intro-text").text(ui[currentLang].warning);
+$("#intro-btn").text(ui[currentLang].continue);
+
 
     $(".lang-flag").removeClass("active");
     currentLang === "pt"
@@ -201,13 +257,14 @@ $(document).ready(function () {
   });
 
   function checkPassword() {
+    $("#return-btn").hide();
     const enteredPassword = $("#password-input").val();
 
-    if (enteredPassword === correctPassword) {
+    if (enteredPassword.trim().toUpperCase() === correctPassword) {
+      startBackgroundMusic();
       $("#login-screen").fadeOut(800, function () {
-        $("#text-screen").removeClass("hidden").fadeIn(800);
-        startTyping();
-      });
+        $("#intro-screen").removeClass("hidden").fadeIn(800);
+      });      
     } else {
       $("#error-message")
         .text(ui[currentLang].error)
@@ -219,11 +276,143 @@ $(document).ready(function () {
     }
   }
 
+  $("#intro-btn").on("click", function () {
+  
+    $("#intro-screen").fadeOut(800, function () {
+      $("#text-screen").removeClass("hidden").fadeIn(800);
+      $("#return-btn").fadeIn(600); // 👈 affiché ici aussi
+      startTyping();
+    });
+  });
+  
+  
+
   /* =========================
      TYPEWRITER + SKIP
   ========================== */
 
+  function playNarration() {
+    if (backgroundAudio) {
+      backgroundAudio.volume = 0.09;
+    }
+
+    // 🔒 Sécurité absolue : audio uniquement sur l'écran du texte
+    if (!$("#text-screen").is(":visible")) return;
+  
+    stopNarration();
+  
+    const audioSrc =
+      currentLang === "fr" ? "audioFR.mp3" : "audioBR.mp3";
+  
+    narrationAudio = new Audio(audioSrc);
+    narrationAudio.volume = 0.9;
+  
+    narrationAudio.play().catch(() => {
+      // silence volontaire (autoplay policy)
+    });
+  }
+  
+  
+  function stopNarration() {
+    if (backgroundAudio) {
+      backgroundAudio.volume = 0.09;
+    }
+    if (narrationAudio) {
+      narrationAudio.pause();
+      narrationAudio.currentTime = 0;
+      narrationAudio = null;
+    }
+  }
+
+  
+  function insertStoryImage(target, key, cursor) {
+    const wrapper = $("<div>")
+      .addClass("story-image-wrapper");
+  
+    const img = $("<img>")
+      .attr("src", storyImages[key])
+      .addClass("story-image")
+      .attr("alt", key);
+  
+    wrapper.append(img);
+  
+    if (cursor && cursor.length) {
+      cursor.before(wrapper);
+    } else {
+      target.append(wrapper);
+    }
+  }
+  
+  function insertStorySVG(target, key, cursor) {
+    const wrapper = $("<div>")
+      .addClass("story-image-wrapper story-svg-wrapper");
+  
+    $.get(storySVGs[key], function (data) {
+      const svg = $(data).find("svg");
+      wrapper.append(svg);
+    });
+  
+    if (cursor && cursor.length) {
+      cursor.before(wrapper);
+    } else {
+      target.append(wrapper);
+    }
+  }
+
+  function renderFullStory() {
+    isTyping = false;
+    clearTimeout(typingTimeout);
+    stopCursorBlink();
+    stopNarration();
+  
+    const target = $("#manuscript");
+    const manuscriptText = texts[currentLang];
+  
+    target.empty();
+  
+    let index = 0;
+  
+    while (index < manuscriptText.length) {
+      let matched = false;
+  
+      // SVGs
+      for (const key in storySVGs) {
+        if (manuscriptText.startsWith(key, index)) {
+          insertStorySVG(target, key, null);
+          index += key.length;
+          matched = true;
+          break;
+        }
+      }
+      if (matched) continue;
+  
+      // Images
+      for (const key in storyImages) {
+        if (manuscriptText.startsWith(key, index)) {
+          insertStoryImage(target, key, null);
+          index += key.length;
+          matched = true;
+          break;
+        }
+      }
+      if (matched) continue;
+  
+      // Normal text
+      target.append(manuscriptText.charAt(index));
+      index++;
+    }
+  
+    $("#cursor").remove();
+    $("#skip-btn").hide();
+    $("#cube-btn").fadeIn(800);
+  }
+  
+  
+
+  
   function startTyping() {
+    playNarration();
+
     const target = $("#manuscript");
     const manuscriptText = texts[currentLang];
 
@@ -249,14 +438,32 @@ $(document).ready(function () {
         return;
       }
 
+      for (const key in storyImages) {
+        if (manuscriptText.startsWith(key, index)) {
+          insertStoryImage(target, key, cursor);
+          index += key.length;
+          typingTimeout = setTimeout(typeChar, 600);
+          return;
+        }
+      }
+      for (const key in storySVGs) {
+        if (manuscriptText.startsWith(key, index)) {
+          insertStorySVG(target, key, cursor);
+          index += key.length;
+          typingTimeout = setTimeout(typeChar, 800);
+          return;
+        }
+      }
+      
+      // Normal character typing
       const char = manuscriptText.charAt(index);
       cursor.before(char);
       index++;
 
-      let delay = 35;
-      if (char === "\n") delay = 150;
-      else if (char === ".") delay = 250;
-      else if (char === ",") delay = 100;
+      let delay = 70;
+      if (char === "\n") delay = 300;
+      else if (char === ".") delay = 300;
+      else if (char === ",") delay = 150;
 
       typingTimeout = setTimeout(typeChar, delay);
     }
@@ -265,13 +472,15 @@ $(document).ready(function () {
       isTyping = false;
       clearTimeout(typingTimeout);
       stopCursorBlink();
-
-      target.text(manuscriptText);
+      stopNarration();
+    
       $("#skip-btn").hide();
       $("#cube-btn").fadeIn(1200);
+      $("#cursor").remove();
     }
+    
 
-    $("#skip-btn").off("click").on("click", finishTyping);
+    $("#skip-btn").off("click").on("click", renderFullStory);
 
     startCursorBlink();
     typeChar();
@@ -294,6 +503,7 @@ $(document).ready(function () {
   ========================== */
 
   $("#flag-pt").on("click", function () {
+    stopNarration();
     if (currentLang !== "pt") {
       currentLang = "pt";
       applyLanguage();
@@ -302,6 +512,7 @@ $(document).ready(function () {
   });
 
   $("#flag-fr").on("click", function () {
+    stopNarration();
     if (currentLang !== "fr") {
       currentLang = "fr";
       applyLanguage();
@@ -314,24 +525,46 @@ $(document).ready(function () {
   ========================== */
 
   $("#cube-btn").on("click", function () {
+    stopNarration();
     $("#text-screen").fadeOut(800, function () {
       $(".lang-flag").fadeOut(100);
       $("#hello-screen").fadeIn(800);
-      $("#return-btn").fadeIn(600);
+  
+      showCubePhrase(currentLang); // 👈 ICI
+  
       if (!cubeInitialized) {
         initCube();
         cubeInitialized = true;
       }
     });
   });
+  
 
   $("#return-btn").on("click", function () {
-    $("#hello-screen").fadeOut(600, function () {
-      $("#return-btn").fadeOut(2);
-      $(".lang-flag").fadeIn(400);
-      $("#text-screen").fadeIn(800);
-    });
+
+    // 🔁 Si on est sur le cube → retour au texte
+    if ($("#hello-screen").is(":visible")) {
+  
+      $("#hello-screen").fadeOut(600, function () {
+        $(".lang-flag").fadeIn(400);
+        $("#text-screen").fadeIn(800);
+      });
+  
+    } 
+    // 🔁 Si on est sur le texte → retour à l’intro
+    else if ($("#text-screen").is(":visible")) {
+  
+      stopNarration(); // coupe l’audio si en cours
+  
+      $("#text-screen").fadeOut(600, function () {
+        $("#return-btn").fadeOut(2);
+        $("#intro-screen").fadeIn(800);
+      });
+  
+    }
+  
   });
+  
   
   
 
@@ -395,14 +628,16 @@ scene.add(cube);
 function updateResponsiveCube() {
   const w = window.innerWidth;
 
-  if (w < 600) {
-    // 📱 Smartphone
-    cube.scale.set(0.75, 0.75, 0.75);
-    camera.position.set(3.2, 3, 3.2);
-  } else if (w < 1024) {
+  if (w <= 600) {
+    // 📱 Mobile
+    cube.scale.set(0.6, 0.6, 0.6);
+    camera.position.set(4.2, 3.8, 4.2);
+
+  } else if (w <= 1024) {
     // 📱 Tablette
-    cube.scale.set(0.9, 0.9, 0.9);
-    camera.position.set(3.4, 3.1, 3.4);
+    cube.scale.set(0.85, 0.85, 0.85);
+    camera.position.set(3.6, 3.3, 3.6);
+
   } else {
     // 💻 Desktop
     cube.scale.set(1, 1, 1);
@@ -411,6 +646,7 @@ function updateResponsiveCube() {
 
   camera.lookAt(0, 0, 0);
 }
+
 
 updateResponsiveCube();
 
@@ -444,3 +680,24 @@ updateResponsiveCube();
   $("#password-input").focus();
 
 });
+
+function showCubePhrase(lang) {
+  const phraseFR = "NAS LEMBRANÇAS A LUZ NASCERÁ";
+  const phrasePT = "NAS LEMBRANÇAS A LUZ NASCERÁ";
+
+  const phrase = lang === "fr" ? phraseFR : phrasePT;
+
+  const container = $("#cube-phrase");
+  container.show().empty();
+
+  [...phrase].forEach((char, i) => {
+    const span = $("<span>")
+      .addClass("cube-letter")
+      .text(char === " " ? "\u00A0" : char)
+      .css("animation-delay", `${i * 0.12}s`);
+
+    container.append(span);
+  });
+}
+
+
