@@ -16,6 +16,7 @@
   <!-- Retro font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+  
 
 
 </head>
@@ -43,6 +44,19 @@
     <p id="error-message"></p>
   </div>
 
+  <!-- INTRO SCREEN -->
+<div id="intro-screen" class="screen hidden">
+  <img id="story-title-img" alt="Titre" />
+
+
+  <p class="intro-warning">
+    ⚠️ <span class="intro-text"></span>
+  </p>
+
+  <button id="intro-btn">CONTINUER</button>
+</div>
+
+
   <!-- TEXT SCREEN -->
 <div id="text-screen" class="screen hidden">
   <div id="manuscript"></div>
@@ -62,6 +76,7 @@
 
   <!-- HELLO WORLD SCREEN -->
   <div id="hello-screen" class="screen hidden">
+    <div id="cube-phrase"></div>
   <div id="cube-container"></div>
 </div>
 
