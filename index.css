@@ -86,8 +86,12 @@ input {
 }
 
 input:focus {
-  border-color: #8b0000;
+  border-color: #e6dcc8; /* blanc chaud */
+  box-shadow:
+    0 0 8px rgba(230, 220, 200, 0.6),
+    inset 0 0 6px rgba(255, 255, 255, 0.15);
 }
+
 
 /* =========================
    BUTTONS
@@ -340,3 +344,147 @@ button:hover {
 #return-btn:active {
   transform: scale(0.95);
 }
+
+/* =========================
+   INTRO SCREEN
+========================= */
+
+#intro-screen {
+  text-align: center;
+}
+
+#story-title {
+  font-size: 1.6rem;
+  letter-spacing: 0.35em;
+  margin-bottom: 2.2rem;
+  text-transform: uppercase;
+  font-family: "Press Start 2P", serif;
+  color: #e6dcc8;
+}
+
+.intro-warning {
+  font-size: 0.75rem;
+  line-height: 1.6;
+  opacity: 0.75;
+  margin-bottom: 2.4rem;
+  letter-spacing: 0.08em;
+}
+
+#story-title-img {
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2.2rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  filter: drop-shadow(0 0 12px rgba(0,0,0,0.8));
+}
+
+/* =========================
+   STORY IMAGE DRAW EFFECT
+========================= */
+
+.story-image-wrapper {
+  width: 100%;
+  max-width: 520px;
+
+  margin: 2.8rem auto;   /* 👈 CENTRAGE HORIZONTAL */
+  display: block;
+
+  text-align: center;   /* sécurité pour SVG inline */
+}
+
+.story-image {
+  width: 100%;
+  margin: 0 auto;  
+  height: auto;
+  display: block;
+  image-rendering: auto;
+  will-change: transform;
+}
+
+.story-svg-wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+.story-svg-wrapper svg {
+  max-width: 100%;
+  height: auto;
+}
+@media (min-width: 600px) {
+  #cube-phrase {
+    position: absolute;
+    top: 2vh;
+    left: 170%;
+    transform: translateX(-50%);
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.1rem, 2.5vw, 2rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+
+    color: transparent;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+  }
+}
+
+@media (max-width: 600px) {
+  #cube-phrase {
+    position: absolute;
+    top: 6vh;
+    left: 55%;
+    transform: translateX(-50%);
+
+    font-family: "Cormorant Garamond", serif;
+    font-size: clamp(1.rem, 2.5vw, 2rem);
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+
+    color: transparent;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 10;
+  }
+}
+
+
+
+/* chaque lettre */
+.cube-letter {
+  opacity: 0;
+  display: inline-block;
+
+  color: #f5e6a8;
+  text-shadow:
+    0 0 6px rgba(255, 220, 150, 0.2),
+    0 0 12px rgba(255, 200, 120, 0.15);
+
+  animation: revealLetter 0.9s ease forwards;
+}
+
+@keyframes revealLetter {
+  0% {
+    opacity: 0;
+    filter: blur(6px);
+    text-shadow: none;
+  }
+  60% {
+    opacity: 1;
+    filter: blur(1px);
+    text-shadow:
+      0 0 12px rgba(255, 220, 150, 0.6),
+      0 0 28px rgba(255, 180, 90, 0.4);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    text-shadow:
+      0 0 8px rgba(255, 210, 130, 0.35),
+      0 0 18px rgba(255, 170, 80, 0.25);
+  }
+}
+
+
