@@ -15,20 +15,26 @@
 
   <!-- Retro font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&display=swap" rel="stylesheet">
+
 
 </head>
 
 <body>
+
+  <div id="lang-tab">
+    <img id="flag-pt" class="lang-flag active" src="br.png" alt="Português">
+    <img id="flag-fr" class="lang-flag" src="fr.png" alt="Français">
+  </div>
+  
+  
   <!-- LOGIN SCREEN -->
   <div id="login-screen" class="screen">
-    <h1>UNKNOWN TERMINAL</h1>
-
     <p class="subtitle">ENTER THE SECRET</p>
 
     <input 
       type="password" 
       id="password-input" 
-      placeholder="••••••••••••••"
       autocomplete="off"
     >
 
@@ -36,6 +42,23 @@
 
     <p id="error-message"></p>
   </div>
+
+  <!-- TEXT SCREEN -->
+<div id="text-screen" class="screen hidden">
+  <div id="manuscript"></div>
+  <button id="skip-btn" class="hidden" aria-label="Skip">
+    <img src="ff.png" alt="Fast forward">
+  </button>
+  
+  
+  <button id="cube-btn" class="hidden">CUBE</button>
+</div>
+
+<button id="return-btn" class="hidden" aria-label="Return">
+  <img src="return.png" alt="Return">
+</button>
+
+
 
   <!-- HELLO WORLD SCREEN -->
   <div id="hello-screen" class="screen hidden">
