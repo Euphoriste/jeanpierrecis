@@ -1,12 +1,15 @@
-/* RESET */
+/* =========================
+   RESET
+========================= */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-
-/* GLOBAL */
+/* =========================
+   GLOBAL
+========================= */
 body {
   min-height: 100vh;
   background: #0f0d0b;
@@ -27,8 +30,11 @@ body {
   text-align: center;
 }
 
-/* CONTAINER */
+/* =========================
+   SCREEN (IMPORTANT)
+========================= */
 .screen {
+  position: relative; /* ← CRUCIAL pour le bouton ⏩ */
   width: 90%;
   max-width: 420px;
   padding: 2.5rem 2rem;
@@ -37,14 +43,19 @@ body {
   box-shadow: 
     0 0 40px rgba(0,0,0,0.9),
     inset 0 0 60px rgba(0,0,0,0.6);
+  animation: breathe 6s ease-in-out infinite;
 }
 
-/* HIDDEN */
+/* =========================
+   HIDDEN
+========================= */
 .hidden {
   display: none;
 }
 
-/* TITLES */
+/* =========================
+   TITLES / SUBTITLE
+========================= */
 h1 {
   font-size: 1.4rem;
   letter-spacing: 0.1em;
@@ -52,14 +63,15 @@ h1 {
   text-transform: uppercase;
 }
 
-/* SUBTITLE */
 .subtitle {
   font-size: 0.75rem;
   margin-bottom: 2rem;
   opacity: 0.7;
 }
 
-/* INPUT */
+/* =========================
+   INPUT
+========================= */
 input {
   width: 100%;
   padding: 0.9rem;
@@ -70,17 +82,16 @@ input {
   font-size: 0.9rem;
   text-align: center;
   outline: none;
-}
-
-input::placeholder {
-  color: rgba(224, 214, 195, 0.3);
+  caret-color: #e0d6c3;
 }
 
 input:focus {
   border-color: #8b0000;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTONS
+========================= */
 button {
   width: 100%;
   margin-top: 1.5rem;
@@ -98,7 +109,9 @@ button:hover {
   background: #2a231d;
 }
 
-/* ERROR */
+/* =========================
+   ERROR
+========================= */
 #error-message {
   margin-top: 1.2rem;
   font-size: 0.7rem;
@@ -106,12 +119,116 @@ button:hover {
   letter-spacing: 0.1em;
 }
 
-
-/* SUBTLE BREATHING EFFECT */
-.screen {
-  animation: breathe 6s ease-in-out infinite;
+/* =========================
+   TEXT SCREEN
+========================= */
+#text-screen {
+  max-width: 700px;
+  line-height: 1.6;
+  font-size: 0.75rem;
+  text-align: left;
 }
 
+#manuscript {
+  white-space: pre-wrap;
+  opacity: 0.95;
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+}
+
+/* =========================
+   SKIP BUTTON ⏩
+========================= */
+#skip-btn {
+  position: absolute;
+  bottom: 14px;
+  right: 16px;
+
+  background: none;
+  border: none;
+  padding: 0;
+  width: auto;
+  height: auto;
+
+  opacity: 0.45;
+  cursor: pointer;
+  z-index: 5;
+
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+#skip-btn img {
+  width: 26px;      /* ajuste si nécessaire */
+  height: auto;
+  display: block;
+}
+
+#skip-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+#skip-btn:active {
+  transform: scale(0.95);
+}
+
+/* =========================
+   CUBE BUTTON (STYLIZED)
+========================= */
+#cube-btn {
+  margin-top: 2.2rem;
+  padding: 1.1rem;
+  width: 100%;
+
+  background: linear-gradient(
+    145deg,
+    #2a231d,
+    #15110e
+  );
+
+  border: 1px solid #6a5f52;
+  color: #e6dcc8;
+
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 0 18px rgba(0,0,0,0.9),
+    inset 0 0 14px rgba(255,255,255,0.04);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+#cube-btn:hover {
+  background: linear-gradient(
+    145deg,
+    #3a3027,
+    #1b1612
+  );
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 28px rgba(0,0,0,1),
+    inset 0 0 18px rgba(255,255,255,0.06);
+}
+
+#cube-btn:active {
+  transform: translateY(0);
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.9),
+    inset 0 0 10px rgba(0,0,0,0.8);
+}
+
+/* =========================
+   BREATHING EFFECT
+========================= */
 @keyframes breathe {
   0%, 100% {
     box-shadow:
@@ -125,7 +242,9 @@ button:hover {
   }
 }
 
-
+/* =========================
+   HELLO / CUBE SCREEN
+========================= */
 #hello-screen {
   position: fixed;
   inset: 0;
@@ -143,3 +262,81 @@ button:hover {
   border: none;
 }
 
+/* =========================
+   LANGUAGE TAB
+========================= */
+#lang-tab {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  padding: 6px;
+  background: rgba(15, 13, 11, 0.95);
+  border-radius: 999px;
+  border: 1px solid #3a342c;
+  z-index: 1000;
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.85),
+    inset 0 0 20px rgba(0,0,0,0.6);
+}
+
+.lang-flag {
+  width: 54px;
+  height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+  opacity: 0.4;
+  cursor: pointer;
+  transition: opacity 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.lang-flag.active {
+  opacity: 1;
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 2px rgba(224, 214, 195, 0.6),
+    0 4px 10px rgba(0,0,0,0.8);
+}
+
+.lang-flag:active {
+  transform: scale(0.96);
+}
+
+/* =========================
+   RETURN BUTTON
+========================= */
+#return-btn {
+  position: fixed;
+  bottom: 18px;
+  left: 18px;
+
+  background: none;
+  border: none;
+  padding: 0;
+
+  width: auto;
+  height: auto;
+
+  opacity: 0.5;
+  cursor: pointer;
+  z-index: 1001;
+
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#return-btn img {
+  width: 34px;
+  height: auto;
+  display: block;
+}
+
+#return-btn:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+#return-btn:active {
+  transform: scale(0.95);
+}
