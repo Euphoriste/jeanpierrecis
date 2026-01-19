@@ -460,7 +460,7 @@ $("#intro-btn").text(ui[currentLang].continue);
       cursor.before(char);
       index++;
 
-      let delay = 70;
+      let delay = 65;
       if (char === "\n") delay = 300;
       else if (char === ".") delay = 300;
       else if (char === ",") delay = 150;
@@ -699,5 +699,6 @@ function showCubePhrase(lang) {
     container.append(span);
   });
 }
+
 
 
