@@ -298,6 +298,28 @@ $("#intro-btn").text(ui[currentLang].continue);
     });
   });
   
+
+  function scrollCursorToCenter() {
+    const screen = document.getElementById("text-screen");
+    const cursor = document.getElementById("cursor");
+  
+    if (!screen || !cursor) return;
+  
+    const screenRect = screen.getBoundingClientRect();
+    const cursorRect = cursor.getBoundingClientRect();
+  
+    const offset =
+      cursorRect.top -
+      screenRect.top -
+      screen.clientHeight / 2 +
+      cursorRect.height / 2;
+  
+    screen.scrollBy({
+      top: offset,
+      behavior: "auto"
+    });
+  }
+  
   
 
   /* =========================
@@ -348,6 +370,7 @@ $("#intro-btn").text(ui[currentLang].continue);
       .attr("alt", key);
   
     wrapper.append(img);
+    setTimeout(scrollCursorToCenter, 100);
   
     if (cursor && cursor.length) {
       cursor.before(wrapper);
@@ -363,6 +386,7 @@ $("#intro-btn").text(ui[currentLang].continue);
     $.get(storySVGs[key], function (data) {
       const svg = $(data).find("svg");
       wrapper.append(svg);
+      setTimeout(scrollCursorToCenter, 100);
     });
   
     if (cursor && cursor.length) {
@@ -471,7 +495,9 @@ $("#intro-btn").text(ui[currentLang].continue);
       // Normal character typing
       const char = manuscriptText.charAt(index);
       cursor.before(char);
-      index++;
+index++;
+
+scrollCursorToCenter();
 
       let delay = 68;
       if (char === "\n") delay = 300;
@@ -494,6 +520,7 @@ $("#intro-btn").text(ui[currentLang].continue);
     
 
     $("#skip-btn").off("click").on("click", renderFullStory);
+    setTimeout(scrollCursorToCenter, 100);
 
     startCursorBlink();
     typeChar();
