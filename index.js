@@ -471,6 +471,7 @@ $("#intro-btn").text(ui[currentLang].continue);
 
   
   function startTyping() {
+    $("#fixed-footer").fadeIn(400);
     playNarration();
 
     const target = $("#manuscript");
@@ -588,6 +589,7 @@ scrollCursorToCenter();
   ========================== */
 
   $("#cube-btn").on("click", function () {
+    $("#fixed-footer").fadeOut(200);
     releaseWakeLock()
     stopNarration();
     $("#text-screen").fadeOut(800, function () {
@@ -622,6 +624,7 @@ scrollCursorToCenter();
     } 
     // 🔁 Si on est sur le texte → retour à l’intro
     else if ($("#text-screen").is(":visible")) {
+      $("#fixed-footer").fadeOut(200);
       releaseWakeLock()
   
       stopNarration(); // coupe l’audio si en cours
