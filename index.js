@@ -529,7 +529,10 @@ scrollCursorToCenter();
       if (char === "\n") delay = 300;
       else if (char === ".") delay = 300;
       else if (char === ",") delay = 150;
-
+      else if (char === "ordem se dissolver.") delay = 1000;
+      else if (char === "demais em troca.") delay = 900;
+      else if (char === "e rancores antigos") delay = 800;
+      else if (char === "aprendeu a compartilhá-la") delay = 2000;
       typingTimeout = setTimeout(typeChar, delay);
     }
 
