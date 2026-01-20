@@ -3,6 +3,8 @@ $(document).ready(function () {
   /* =========================
      CONFIG
   ========================== */
+  $("#return-btn").hide();
+  $("#skip-btn").hide();
 
   const correctPassword = "LUZ";
   let cubeInitialized = false;
@@ -589,10 +591,10 @@ scrollCursorToCenter();
   ========================== */
 
   $("#cube-btn").on("click", function () {
-    $("#fixed-footer").fadeOut(200);
     releaseWakeLock()
     stopNarration();
     $("#text-screen").fadeOut(800, function () {
+      $("#skip-btn").fadeOut(20);
       $(".lang-flag").fadeOut(100);
       $("#hello-screen").fadeIn(800);
   
