@@ -445,7 +445,7 @@ button:hover {
     transform: translateX(-50%);
 
     font-family: "Cormorant Garamond", serif;
-    font-size: clamp(0.5.rem, 2.5vw, 2rem);
+    font-size: clamp(0.8rem, 2.5vw, 1.5rem);
     letter-spacing: 0.25em;
     text-transform: uppercase;
 
