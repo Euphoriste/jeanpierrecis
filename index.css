@@ -129,6 +129,8 @@ button:hover {
 #text-screen {
   max-width: 700px;
   line-height: 1.6;
+  margin-bottom: 30px;
+  padding-top: 80px; 
   font-size: 0.75rem;
   text-align: left;
   max-height: 90vh;
@@ -334,6 +336,7 @@ button:hover {
 }
 
 #return-btn img {
+  padding-bottom: 5px;
   width: 34px;
   height: auto;
   display: block;
@@ -488,6 +491,45 @@ button:hover {
       0 0 8px rgba(255, 210, 130, 0.35),
       0 0 18px rgba(255, 170, 80, 0.25);
   }
+}
+
+/* =========================
+   FIXED FOOTER
+========================= */
+
+#fixed-footer {
+  position: fixed;
+  bottom: 14px;
+  left: 0;
+  right: 0;
+
+  height: 56px; /* 👈 hauteur sacrée */
+  padding: 0 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  pointer-events: none; /* sauf boutons */
+  z-index: 1001;
+}
+
+#fixed-footer button {
+  pointer-events: auto;
+  background: none;
+  border: none;
+  padding: 0;
+  opacity: 0.5;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+#fixed-footer button:hover {
+  opacity: 1;
+  transform: scale(1.15);
+}
+
+#fixed-footer button:active {
+  transform: scale(0.95);
 }
 
 
