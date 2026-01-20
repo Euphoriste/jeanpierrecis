@@ -12,6 +12,7 @@ $(document).ready(function () {
   let backgroundAudio = new Audio("background.mp3");
 backgroundAudio.volume = 0.09;
 backgroundAudio.loop = true;
+let wakeLock = null;
 
   let typingTimeout = null;
   let cursorInterval = null;
@@ -232,6 +233,26 @@ Object.values(storyImages).forEach(src => {
     });
   }
   
+  async function requestWakeLock() {
+    try {
+      if ("wakeLock" in navigator) {
+        wakeLock = await navigator.wakeLock.request("screen");
+  
+        wakeLock.addEventListener("release", () => {
+          wakeLock = null;
+        });
+      }
+    } catch (err) {
+      // silencieux volontairement
+    }
+  }
+
+  function releaseWakeLock() {
+    if (wakeLock) {
+      wakeLock.release();
+      wakeLock = null;
+    }
+  }
   
 
   function applyLanguage() {
@@ -286,10 +307,11 @@ $("#intro-btn").text(ui[currentLang].continue);
 
   $("#intro-btn").on("click", function () {
 
-    // 🎧 DÉMARRAGE AUDIO MOBILE SAFE
     if (backgroundAudio.paused) {
       backgroundAudio.play().catch(() => {});
     }
+  
+    requestWakeLock(); // 👈 ICI
   
     $("#intro-screen").fadeOut(800, function () {
       $("#text-screen").removeClass("hidden").fadeIn(800);
@@ -297,6 +319,7 @@ $("#intro-btn").text(ui[currentLang].continue);
       startTyping();
     });
   });
+  
   
 
   function scrollCursorToCenter() {
@@ -565,6 +588,7 @@ scrollCursorToCenter();
   ========================== */
 
   $("#cube-btn").on("click", function () {
+    releaseWakeLock()
     stopNarration();
     $("#text-screen").fadeOut(800, function () {
       $(".lang-flag").fadeOut(100);
@@ -579,6 +603,11 @@ scrollCursorToCenter();
     });
   });
   
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible" && $("#text-screen").is(":visible")) {
+      requestWakeLock();
+    }
+  });
 
   $("#return-btn").on("click", function () {
 
@@ -593,6 +622,7 @@ scrollCursorToCenter();
     } 
     // 🔁 Si on est sur le texte → retour à l’intro
     else if ($("#text-screen").is(":visible")) {
+      releaseWakeLock()
   
       stopNarration(); // coupe l’audio si en cours
   
