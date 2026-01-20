@@ -9,7 +9,9 @@ $(document).ready(function () {
 
   let currentLang = "pt";
   let narrationAudio = null;
-  let backgroundAudio = null;
+  let backgroundAudio = new Audio("background.mp3");
+backgroundAudio.volume = 0.09;
+backgroundAudio.loop = true;
 
   let typingTimeout = null;
   let cursorInterval = null;
@@ -213,23 +215,23 @@ Object.values(storyImages).forEach(src => {
      APPLY LANGUAGE
   ========================== */
   function startBackgroundMusic() {
-  if (backgroundAudio) return;
-
-  backgroundAudio = new Audio("background.mp3");
-  backgroundAudio.volume = 0.09;
-  backgroundAudio.loop = false; // IMPORTANT: disable native loop
-
-  // 🔁 Manual loop (works everywhere)
-  backgroundAudio.addEventListener("ended", () => {
-    backgroundAudio.currentTime = 0;
-    backgroundAudio.play().catch(() => {});
-  });
-
-  backgroundAudio.play().catch(() => {
-    // autoplay blocked until user interaction
-  });
-}
-
+    if (backgroundAudio) return;
+  
+    backgroundAudio = new Audio("background.mp3");
+    backgroundAudio.volume = 0.09;
+    backgroundAudio.loop = false; // IMPORTANT: disable native loop
+  
+    // 🔁 Manual loop (works everywhere)
+    backgroundAudio.addEventListener("ended", () => {
+      backgroundAudio.currentTime = 0;
+      backgroundAudio.play().catch(() => {});
+    });
+  
+    backgroundAudio.play().catch(() => {
+      // autoplay blocked until user interaction
+    });
+  }
+  
   
 
   function applyLanguage() {
@@ -268,7 +270,6 @@ $("#intro-btn").text(ui[currentLang].continue);
     const enteredPassword = $("#password-input").val();
 
     if (enteredPassword.trim().toUpperCase() === correctPassword) {
-      startBackgroundMusic();
       $("#login-screen").fadeOut(800, function () {
         $("#intro-screen").removeClass("hidden").fadeIn(800);
       });      
@@ -284,10 +285,15 @@ $("#intro-btn").text(ui[currentLang].continue);
   }
 
   $("#intro-btn").on("click", function () {
+
+    // 🎧 DÉMARRAGE AUDIO MOBILE SAFE
+    if (backgroundAudio.paused) {
+      backgroundAudio.play().catch(() => {});
+    }
   
     $("#intro-screen").fadeOut(800, function () {
       $("#text-screen").removeClass("hidden").fadeIn(800);
-      $("#return-btn").fadeIn(600); // 👈 affiché ici aussi
+      $("#return-btn").fadeIn(600);
       startTyping();
     });
   });
@@ -706,8 +712,5 @@ function showCubePhrase(lang) {
     container.append(span);
   });
 }
-
-
-
 
 
