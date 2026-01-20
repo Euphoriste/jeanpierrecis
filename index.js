@@ -666,8 +666,25 @@ updateResponsiveCube();
     /* ===== CONTROLS ===== */
 
     const controls = new THREE.OrbitControls(camera, renderer.domElement);
-    controls.enableDamping = true;
-    controls.enableZoom = false;
+    controls.enableZoom = true;
+controls.zoomSpeed = 0.8;     // mouse wheel
+controls.enableDamping = true;
+controls.dampingFactor = 0.08;
+controls.minDistance = 2.5;
+controls.maxDistance = 8;
+    controls.enableRotate = true;
+controls.minPolarAngle = 0;              // look from top
+controls.maxPolarAngle = Math.PI;         // look from bottom
+controls.enablePan = false;               // cleaner interaction
+let isUserInteracting = false;
+controls.addEventListener("start", () => {
+  isUserInteracting = true;
+});
+
+controls.addEventListener("end", () => {
+  isUserInteracting = false;
+});
+
 
     window.addEventListener("resize", () => {
       renderer.setSize(window.innerWidth, window.innerHeight);
@@ -681,11 +698,17 @@ updateResponsiveCube();
 
     function animate() {
       requestAnimationFrame(animate);
-      cube.rotation.y += 0.0009;
-      cube.rotation.x += 0.0005;
+    
+      if (!isUserInteracting) {
+        cube.rotation.y += 0.0009;
+        cube.rotation.x += 0.0005;
+      }
+    
       controls.update();
       renderer.render(scene, camera);
     }
+    
+    
 
     animate();
   }
